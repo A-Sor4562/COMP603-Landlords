@@ -69,17 +69,4 @@ public class Deck {
         }
     }
     
-    public static void main(String[] args) {
-        Deck trialDeck = new Deck();
-        trialDeck.fillDeck();
-        
-        trialDeck.printDeck();
-        
-        trialDeck.shuffleDeck();
-        
-        System.out.println("Shuffled");
-        trialDeck.printDeck();
-               
-    }
-    
 }    
