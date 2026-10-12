@@ -59,6 +59,16 @@ public class Deck {
         this.deckOfCards.add(c);
     }
     
+    //Remove method
+    public void removeCard(Card c){
+        this.deckOfCards.remove(c);
+    }
+    
+    //Empty Deck method
+    public void emptyDeck(){
+        this.deckOfCards.clear();
+    };
+    
     //Get deckSize
     public int deckSize(){
         return this.deckOfCards.size();
