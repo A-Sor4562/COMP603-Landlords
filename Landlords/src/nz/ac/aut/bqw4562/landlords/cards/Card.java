@@ -11,9 +11,9 @@ package nz.ac.aut.bqw4562.landlords.cards;
  */
 public abstract class Card {
     
-    //Only method that must be handled by sub-classes.
+    //methods that must be handled by sub-classes.
     //Makes it easy when needing to print to CLI.
     @Override
     public abstract String toString();
-    
+      
 }

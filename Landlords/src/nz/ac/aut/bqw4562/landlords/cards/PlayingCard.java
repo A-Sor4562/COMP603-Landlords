@@ -8,7 +8,7 @@ package nz.ac.aut.bqw4562.landlords.cards;
  *
  * @author AngelaSoriano
  * Handles the regular 52 PlayingCards.
- * No logic is coded here
+ * No logic is coded here//Comparable implemented for sorting, most likely temporary
  */
 public class PlayingCard extends Card{
     

@@ -17,7 +17,8 @@ import java.util.Collections;
 public class Deck {
     //must be private so only methods can be used for access
     private ArrayList<Card> deckOfCards;
-    
+   
+    //public constructor
     public Deck(){
         this.deckOfCards = new ArrayList<>();
     };
@@ -48,7 +49,10 @@ public class Deck {
         Collections.shuffle(deckOfCards);
     }
     
-    //Sort Method
+//    //Sort Method
+//    public void sortDeck(){
+//        this.deckOfCards.sort(null);
+//    }
     
     //Add Method
     public void addCard(Card c){
