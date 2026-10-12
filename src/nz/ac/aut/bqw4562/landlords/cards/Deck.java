@@ -1,0 +1,85 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package nz.ac.aut.bqw4562.landlords.cards;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+/**
+ * 
+ * @author AngelaSoriano
+ * Deck generation, shuffling and sorting
+ * Also handles adding and removing cards from decks.
+ * 
+ */
+public class Deck {
+    //must be private so only methods can be used for access
+    private ArrayList<Card> deckOfCards;
+    
+    public Deck(){
+        this.deckOfCards = new ArrayList<>();
+    };
+    
+    //method to fill a deck
+    public void fillDeck(){
+        
+        //Loop for Iterating All Enums
+        for (Suit s : Suit.values())
+        {
+            for (Rank r : Rank.values())
+            {
+                //Add a PlayingCard to deck based on the Suit and Rank the loop is in.
+                PlayingCard card = new PlayingCard(s, r);
+                this.addCard(card);
+            }
+        }
+        
+        //Adds the two jokers to deck
+        this.addCard(Joker.redJoker());
+        this.addCard(Joker.blackJoker());
+        
+    }
+    
+        
+    //Shuffle Method, can also use seeds in the future
+    public void shuffleDeck(){
+        Collections.shuffle(deckOfCards);
+    }
+    
+    //Sort Method
+    
+    //Add Method
+    public void addCard(Card c){
+        this.deckOfCards.add(c);
+    }
+    
+    //Get deckSize
+    public int deckSize(){
+        return this.deckOfCards.size();
+    }
+    
+    //Printing methods for CLI
+    //Print Whole Deck
+    public void printDeck(){
+        
+        for(int i = 0; i < deckSize(); i++){
+            System.out.println(deckOfCards.get(i));
+        }
+    }
+    
+    public static void main(String[] args) {
+        Deck trialDeck = new Deck();
+        trialDeck.fillDeck();
+        
+        trialDeck.printDeck();
+        
+        trialDeck.shuffleDeck();
+        
+        System.out.println("Shuffled");
+        trialDeck.printDeck();
+               
+    }
+    
+}    
