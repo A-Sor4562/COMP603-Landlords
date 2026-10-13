@@ -13,11 +13,25 @@ import nz.ac.aut.bqw4562.landlords.cards.Deck;
  */
 public abstract class Player {
     
-    private Deck deck;
-    private String name;
+    protected Deck deck;
+    protected String name;
+    protected String playerType;
     
-    //private constructor, each player has only one deck
-    private Player(){
+    //constructor for method only instantiation, 
+    //each player has only one deck
+    protected Player(){
+        this.deck = new Deck();
+    } 
+    
+    public void setPlayerName(String changeName){
+        this.name = changeName;
     }
     
+    public String getPlayerName(){
+        return name;
+    }
+    
+    public String getPlayerType(){
+        return this.playerType;
+    }
 }
