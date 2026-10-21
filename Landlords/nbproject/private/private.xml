@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/GitHub/COMP603-Landlords/Landlords/src/nz/ac/aut/bqw4562/landlords/cards/Deck.java</file>
-            <file>file:/C:/GitHub/COMP603-Landlords/Landlords/src/nz/ac/aut/bqw4562/landlords/cards/Card.java</file>
-            <file>file:/C:/GitHub/COMP603-Landlords/Landlords/src/nz/ac/aut/bqw4562/landlords/cards/PlayingCard.java</file>
-            <file>file:/C:/GitHub/COMP603-Landlords/Landlords/src/nz/ac/aut/bqw4562/landlords/cards/Joker.java</file>
+            <file>file:/C:/GitHub/COMP603-Landlords/Landlords/src/nz/ac/aut/bqw4562/landlords/game/Phase.java</file>
+            <file>file:/C:/GitHub/COMP603-Landlords/Landlords/src/nz/ac/aut/bqw4562/landlords/game/BiddingPhase.java</file>
+            <file>file:/C:/GitHub/COMP603-Landlords/Landlords/src/nz/ac/aut/bqw4562/landlords/game/TurnManager.java</file>
+            <file>file:/C:/GitHub/COMP603-Landlords/Landlords/src/nz/ac/aut/bqw4562/landlords/game/Game.java</file>
         </group>
     </open-files>
 </project-private>

@@ -7,7 +7,9 @@ package nz.ac.aut.bqw4562.landlords.player;
 /**
  *
  * @author AngelaSoriano
+ * The two roles in the game, a landlord plays for himself, 
+ * the two peasants are teammates.
  */
-public enum Role {
-    
+enum Role {
+    LANDLORD, PEASANT
 }

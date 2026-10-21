@@ -35,4 +35,20 @@ public abstract class Player {
     public String getPlayerType(){
         return this.playerType;
     }
+    
+    //Role methods
+    //Set player as Landlord
+    public void setAsLandlord(){
+        this.role = Role.LANDLORD;
+    }
+    
+    //Set player as Peasant
+    public void setAsPeasant(){
+        this.role = Role.PEASANT;
+    }
+    
+    //Get player role
+    public Role getRole(){
+        return this.role;
+    }
 }
