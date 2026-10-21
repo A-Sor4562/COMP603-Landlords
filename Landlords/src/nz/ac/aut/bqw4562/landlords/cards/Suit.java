@@ -9,10 +9,10 @@ package nz.ac.aut.bqw4562.landlords.cards;
  * @author AngelaSoriano
  * Holds all the suits except the Joker
  * Mostly cosmetic, isn't used for game logic, only in deck generation.
- * 
+ * Package-Private
  * 
  */
-public enum Suit {
+enum Suit {
     
     HEARTS, DIAMONDS, CLUBS, SPADES;
     

@@ -64,10 +64,15 @@ public class Deck {
         this.deckOfCards.remove(c);
     }
     
-    //Empty Deck method
-    public void emptyDeck(){
+    //Empty Deck method, renamed to clearDeck for clarity
+    public void clearDeck(){
         this.deckOfCards.clear();
     };
+    
+    //Check deck if empty, returns boolean
+    public boolean isDeckEmpty(){
+        return this.deckOfCards.isEmpty();
+    }
     
     //Get deckSize
     public int deckSize(){

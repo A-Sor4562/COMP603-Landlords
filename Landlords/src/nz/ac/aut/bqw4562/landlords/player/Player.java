@@ -16,6 +16,7 @@ public abstract class Player {
     protected Deck deck;
     protected String name;
     protected String playerType;
+    protected Role role; 
     
     //constructor for method only instantiation, 
     //each player has only one deck
