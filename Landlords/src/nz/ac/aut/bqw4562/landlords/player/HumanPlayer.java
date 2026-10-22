@@ -17,9 +17,9 @@ public class HumanPlayer extends Player{
     };
     
     //method only instantiation
-    public HumanPlayer createHumanPlayer(String playerName){
+    public static HumanPlayer createHumanPlayer(String playerName){
         HumanPlayer createdPlayer = new HumanPlayer();
-        setPlayerName(playerName);
+        createdPlayer.setPlayerName(playerName);
         return createdPlayer;
     }
 }

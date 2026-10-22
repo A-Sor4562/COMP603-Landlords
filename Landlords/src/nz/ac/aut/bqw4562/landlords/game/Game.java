@@ -22,10 +22,21 @@ public class Game {
     protected TurnManager turnManager;
     protected PhaseManager phaseManager;
     
+    //**Refactor/modify constructor
     public Game(){
         turnManager = new TurnManager(playerOne, playerTwo, playerThree);
         phaseManager = new PhaseManager();
         
+    }
+    
+    //**Temp at the moment, written for testing.
+    public Game(Player pOne, Player pTwo, Player pThree){
+        this.playerOne = pOne;
+        this.playerTwo = pTwo;
+        this.playerThree = pThree;
+        
+        turnManager = new TurnManager(pOne, pTwo, pThree);
+        phaseManager = new PhaseManager();
     }
     
     //What the game needs to do when starting.

@@ -17,9 +17,9 @@ public class AIPlayer extends Player{
     };
     
     //method only instantiation,
-    public AIPlayer createAIPlayer(String playerName){
+    public static AIPlayer createAIPlayer(String playerName){
         AIPlayer createdPlayer = new AIPlayer();
-        setPlayerName(playerName);
+        createdPlayer.setPlayerName(playerName);
         return createdPlayer;
     }
     

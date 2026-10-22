@@ -34,12 +34,11 @@ public class TurnManager {
         return playerArray[index];
     }
     
-    //Increments index and returns the player,
-    protected Player nextPlayer(){
+    //Increments index
+    protected void nextPlayer(){
         if (index == 2) {resetOrder();}
         else {index++;}
         
-        return currentPlayer();
     }
     
     //Returns index of Player
