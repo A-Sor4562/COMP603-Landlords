@@ -4,6 +4,7 @@
  */
 package nz.ac.aut.bqw4562.landlords.game;
 
+import java.util.Scanner;
 import nz.ac.aut.bqw4562.landlords.cards.Deck;
 import nz.ac.aut.bqw4562.landlords.player.*;
 
@@ -13,6 +14,8 @@ import nz.ac.aut.bqw4562.landlords.player.*;
  */
 public class Testing {
     public static void main(String[] args) {
+        //Scanner for testing
+        Scanner scan = new Scanner(System.in);
         
         Player one = HumanPlayer.createHumanPlayer("Uno");
         Player two = HumanPlayer.createHumanPlayer("Dos");
@@ -29,14 +32,35 @@ public class Testing {
         //Deals initial cards
         testBidPhase.dealInitialCards();
         
-        //Prints each players deck
+//        //Prints each players deck
+//        System.out.println("\n\nPlayer Uno");
+//        one.getPlayerDeck().printDeck();
+//        
+//        System.out.println("\n\nPlayer Two");
+//        two.getPlayerDeck().printDeck();
+//        
+//        System.out.println("\n\nPlayer Three");
+//        three.getPlayerDeck().printDeck();
+        
+        //conduct the bidding phase
+        testBidPhase.conductBidding();
+        
+        //Prints out all roles
+        System.out.println(one.getRole());
+        System.out.println(two.getRole());
+        System.out.println(three.getRole());
+        
+        //Prints each players deck size
         System.out.println("\n\nPlayer Uno");
-        one.getPlayerDeck().printDeck();
+        System.out.println(one.getPlayerDeck().deckSize());
         
         System.out.println("\n\nPlayer Two");
-        two.getPlayerDeck().printDeck();
+        System.out.println(two.getPlayerDeck().deckSize());
         
         System.out.println("\n\nPlayer Three");
-        three.getPlayerDeck().printDeck();
+        System.out.println(three.getPlayerDeck().deckSize());
+
+
+
     }
 }
