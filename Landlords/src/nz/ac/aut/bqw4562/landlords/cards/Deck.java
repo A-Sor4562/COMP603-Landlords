@@ -59,9 +59,24 @@ public class Deck {
         this.deckOfCards.add(c);
     }
     
-    //Remove method
-    public void removeCard(Card c){
+    //Remove method for a specific card, returns the removed card.
+    //**add error handling - always returns c without checking if c is actually removed
+    public Card removeCard(Card c){
         this.deckOfCards.remove(c);
+        return c;
+    }
+    
+    //Remove method, no parameters will always remove the first card on a deck
+    //**add error handling, array outof bounds
+    public Card removeCard(){
+        return this.deckOfCards.remove(0);
+    }
+    
+    //Deal method, remove card from a deck, then add to a new one.
+    //This uses the first card on a deck.
+    public void dealCard(Deck recipient){
+        //recipient will add the card that is removed/returned from this deck.
+        recipient.addCard(this.removeCard());
     }
     
     //Empty Deck method, renamed to clearDeck for clarity

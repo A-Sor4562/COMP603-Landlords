@@ -36,6 +36,10 @@ public abstract class Player {
         return this.playerType;
     }
     
+    public Deck getPlayerDeck(){
+        return this.deck;
+    }
+    
     //Role methods
     //Set player as Landlord
     public void setAsLandlord(){

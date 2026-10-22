@@ -5,6 +5,7 @@
 package nz.ac.aut.bqw4562.landlords.game;
 
 import nz.ac.aut.bqw4562.landlords.player.Player;
+import nz.ac.aut.bqw4562.landlords.util.*;
 
 /**
  *
@@ -22,10 +23,25 @@ public class Game {
     protected TurnManager turnManager;
     protected PhaseManager phaseManager;
     
+    //Game will also have this for user input **Temp
+    protected UserInputOutput userIO;
+    
+    //**Refactor/modify constructor
     public Game(){
         turnManager = new TurnManager(playerOne, playerTwo, playerThree);
         phaseManager = new PhaseManager();
         
+    }
+    
+    //**Temp at the moment, written for testing.
+    public Game(Player pOne, Player pTwo, Player pThree){
+        this.playerOne = pOne;
+        this.playerTwo = pTwo;
+        this.playerThree = pThree;
+        
+        turnManager = new TurnManager(pOne, pTwo, pThree);
+        phaseManager = new PhaseManager();
+        userIO = new UserInputOutput();
     }
     
     //What the game needs to do when starting.
