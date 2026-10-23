@@ -41,6 +41,11 @@ public class Deck {
         this.addCard(Joker.redJoker());
         this.addCard(Joker.blackJoker());
         
+        //Check if deck is not filled with 54 cards
+        if (this.deckSize() != 54){
+            throw new IllegalStateException("Deck isn't valid.");
+        }
+        
     }
     
         
@@ -56,20 +61,30 @@ public class Deck {
     
     //Add Method
     public void addCard(Card c){
-        this.deckOfCards.add(c);
+       if(c.equals(null)){
+           System.out.println("Not added, card cannot be null.");
+       } else {
+           this.deckOfCards.add(c);
+       }
     }
     
     //Remove method for a specific card, returns the removed card.
-    //**add error handling - always returns c without checking if c is actually removed
     public Card removeCard(Card c){
-        this.deckOfCards.remove(c);
-        return c;
+        if(deckOfCards.remove(c)){
+            return c;
+        }
+        //returns null, if deck doesn't contain card.
+        return null;
     }
     
     //Remove method, no parameters will always remove the first card on a deck
-    //**add error handling, array outof bounds
     public Card removeCard(){
-        return this.deckOfCards.remove(0);
+        try{
+        return deckOfCards.remove(0);
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("Deck is empty.");
+            return null;
+        }
     }
     
     //Deal method, remove card from a deck, then add to a new one.

@@ -21,21 +21,13 @@ import nz.ac.aut.bqw4562.landlords.util.*;
         
  */
 public class BiddingPhase extends Phase{
-    //References to the three players. **refactor to be about player decks instead?
-    Player playerOne;
-    Player playerTwo;
-    Player playerThree;
-    Deck dealerDeck;
+
+
 
     //**Might want to refactor and pass turnmanager too
     //**Factory method for phasemanager to use?
     public BiddingPhase(Game game){
         super(game);
-        
-        //passes the three players from game.
-        this.playerOne = game.playerOne;
-        this.playerTwo = game.playerTwo;
-        this.playerThree = game.playerThree;
         
         //when phase is first started a dealerDeck initialized, filled and shuffled.
         //Creates deck, fills and shuffles it. **Refactor?
@@ -44,6 +36,7 @@ public class BiddingPhase extends Phase{
         dealerDeck.shuffleDeck();
     }
     
+    //**MISSING
     @Override
     protected boolean executePhase(){
         
