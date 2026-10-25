@@ -54,15 +54,15 @@ public class Deck {
         Collections.shuffle(deckOfCards);
     }
     
-//    //Sort Method
-//    public void sortDeck(){
-//        this.deckOfCards.sort(null);
-//    }
+    //Sort Method
+    public void sortDeck(){
+        Collections.sort(deckOfCards, new CardOrder());
+    }
     
     //Add Method
     public void addCard(Card c){
        if(c.equals(null)){
-           System.out.println("Not added, card cannot be null.");
+           System.out.println("Not added, card doesn't exist.");
        } else {
            this.deckOfCards.add(c);
        }

@@ -8,9 +8,9 @@ package nz.ac.aut.bqw4562.landlords.cards;
  *
  * @author AngelaSoriano
  * Handles the regular 52 PlayingCards.
- * No logic is coded here//Comparable implemented for sorting, most likely temporary
+ * No logic is coded here//Comparable implemented for sorting
  */
-public class PlayingCard extends Card{
+public class PlayingCard extends Card implements Comparable<PlayingCard>{
     
     //Private fields to prevent changes
     private final Suit suit;
@@ -39,6 +39,16 @@ public class PlayingCard extends Card{
     public String toString() 
     {
         return this.rank + " of " + this.suit;
+    }
+    
+    //compareTo implementation, compares suit then rank
+    public int compareTo(PlayingCard c){
+        
+        //If suit is the same, compare the ranks
+        if (this.suit.equals(c.suit)){
+            return this.rank.compareTo(c.rank);
+        }
+        return this.suit.compareTo(c.suit);
     }
     
 }
