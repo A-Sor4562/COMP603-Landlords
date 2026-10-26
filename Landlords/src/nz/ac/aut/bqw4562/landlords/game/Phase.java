@@ -37,6 +37,8 @@ public abstract class Phase {
         this.playerOne = game.playerOne;
         this.playerTwo = game.playerTwo;
         this.playerThree = game.playerThree;
+        
+        dealerDeck = new Deck();
     }
     
     //Each subclass has this as their main player turn loop.**Re-do later

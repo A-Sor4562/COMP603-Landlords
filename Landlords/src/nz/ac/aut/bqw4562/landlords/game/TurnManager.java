@@ -35,7 +35,7 @@ public class TurnManager {
     }
     
     //Increments index
-    protected void nextPlayer(){
+    protected void nextTurn(){
         if (index == 2) {resetOrder();}
         else {index++;}
         

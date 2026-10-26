@@ -61,7 +61,7 @@ public class Deck {
     
     //Add Method
     public void addCard(Card c){
-       if(c.equals(null)){
+       if(c == null){
            System.out.println("Not added, card doesn't exist.");
        } else {
            this.deckOfCards.add(c);
@@ -87,6 +87,16 @@ public class Deck {
         }
     }
     
+    //Remove method using index
+    public Card removeCard(int i){
+        try{
+        return deckOfCards.remove(i);
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("Couldn't find card.");
+            return null;
+        }
+    }
+    
     //Deal method, remove card from a deck, then add to a new one.
     //This uses the first card on a deck.
     public void dealCard(Deck recipient){
@@ -101,12 +111,21 @@ public class Deck {
     
     //Check deck if empty, returns boolean
     public boolean isDeckEmpty(){
+        if (this.deckOfCards == null){
+            return true;
+        }
+        
         return this.deckOfCards.isEmpty();
     }
     
     //Get deckSize
     public int deckSize(){
         return this.deckOfCards.size();
+    }
+    
+    //Get deck **TEMPORARY
+    public ArrayList<Card> getDeck(){
+        return this.deckOfCards;
     }
     
     //Printing methods for CLI
@@ -117,5 +136,6 @@ public class Deck {
             System.out.println(deckOfCards.get(i));
         }
     }
+    
     
 }    

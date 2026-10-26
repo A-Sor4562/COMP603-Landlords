@@ -19,7 +19,7 @@ public class Testing {
         
         Player one = HumanPlayer.createHumanPlayer("Uno");
         Player two = HumanPlayer.createHumanPlayer("Dos");
-        Player three =HumanPlayer.createHumanPlayer("Tres");
+        Player three = HumanPlayer.createHumanPlayer("Tres");
         
         Game game = new Game(one, two, three);
         
@@ -59,8 +59,11 @@ public class Testing {
         
         System.out.println("\n\nPlayer Three");
         System.out.println(three.getPlayerDeck().deckSize());
-
-
+        
+        //Testing PlayPhase
+        PlayPhase playPhase = new PlayPhase(game);
+        playPhase.askPlayerAction();
+        
 
     }
 }
