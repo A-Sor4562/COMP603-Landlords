@@ -64,6 +64,8 @@ public class Testing {
         PlayPhase playPhase = new PlayPhase(game);
         playPhase.askPlayerAction();
         
+        System.out.println("What the heck");
+        
 
     }
 }

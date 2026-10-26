@@ -13,7 +13,8 @@ import nz.ac.aut.bqw4562.landlords.player.Player;
  */
 public class PlayPhase extends Phase{
     //The current player being asked for cards
-    Player currentPlayer = turnManager.currentPlayer();    
+    Player currentPlayer = turnManager.currentPlayer();
+    int passCounter = 0;
 
     public PlayPhase(Game game) {
         super(game);
@@ -43,6 +44,7 @@ public class PlayPhase extends Phase{
         switch(userIO.askUserInput()) {
             case 0:
                 System.out.println("Player is passing");
+                passCounter++;
                 break;
             case 1:
                 //method for checking if play is valid, parameter is a method that
@@ -95,17 +97,26 @@ public class PlayPhase extends Phase{
     //dealerDeck.
     public void checkValidPlay(Deck selectedCards){
         System.out.println("Checking if play is valid");
-        //if the dealerDeck is empty, the play is automatically valid
-        //add the cards from d to the dealerDeck
         
         boolean previousPlay = dealerDeck.isDeckEmpty();
-        
+
+        //if the dealerDeck is empty, the play is automatically valid
+        //add the cards from selectedCards to the dealerDeck
         if (previousPlay){
-            //while dealerDeck isn't empty, keep dealing cards from selectedCards
-            while(!dealerDeck.isDeckEmpty())
-            selectedCards.dealCard(dealerDeck);
+            
+            //while selectedCard isn't empty, keep dealing cards from selectedCards
+            while(!selectedCards.isDeckEmpty()){
+                selectedCards.dealCard(dealerDeck);
+            }
+            
             //change to the next player
             turnManager.nextTurn();
         }
+        else {
+            //Method comparing selectedCards and dealerDeck;
+        } 
+        
     }
+    
+    //
 }
