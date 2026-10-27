@@ -22,6 +22,10 @@ public class Deck {
     public Deck(){
         this.deckOfCards = new ArrayList<>();
     };
+    //Getter for a card at index
+    public Card getCard(int i){
+        return this.deckOfCards.get(i);
+    }
     
     //method to fill a deck
     public void fillDeck(){
@@ -122,6 +126,12 @@ public class Deck {
     public int deckSize(){
         return this.deckOfCards.size();
     }
+    
+    //Check if deck contains a card, returns boolean
+    public boolean containsCard(Card c){
+        return this.deckOfCards.contains(c);
+    }
+    
     
     //Get deck **TEMPORARY
     public ArrayList<Card> getDeck(){
