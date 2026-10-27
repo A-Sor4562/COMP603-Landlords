@@ -18,5 +18,12 @@ public class Pair extends CardPlay {
     private Pair(){
         super(2, Rank.TWO, false, true);
     }
+    
+    //used when checking if deck matches a play
+    protected static boolean PairChecker(Deck deck){
+        Pair single = new Pair();
+        
+        return single.isValidPlay(deck);
+    }
 
 }

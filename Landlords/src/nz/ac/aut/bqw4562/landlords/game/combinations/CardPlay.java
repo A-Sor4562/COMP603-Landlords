@@ -28,13 +28,6 @@ public abstract class CardPlay {
         this.playingCardAllowed = playingCardAllowed;
     }
     
-    
-    //returns the comboType, all the combotype classes will be named with the combo
-    //combo type **Refactor later
-    protected String getComboType(){
-        return getClass().getSimpleName();
-    }
-    
     //Returns if the deck is a valid play if it both meets the requirements and is a
     //valid combination of cards
     protected boolean isValidPlay(Deck deck){
@@ -55,10 +48,10 @@ public abstract class CardPlay {
         else if(containsJoker(deck) != this.jokersAllowed){
             return false;
         }
-        else if(containsPlayingCard(deck) != this.jokersAllowed){
+        else if(containsPlayingCard(deck) != this.playingCardAllowed){
             return false;
         }
-        else if(highestRank(deck).compareTo(maxRank) <= 0){
+        else if(highestRank(deck).compareTo(this.maxRank) <= 0){
             return false;
         }
         else {return true;}

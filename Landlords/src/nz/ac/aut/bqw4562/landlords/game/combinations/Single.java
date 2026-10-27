@@ -17,5 +17,12 @@ public class Single extends CardPlay{
     private Single(){
         super(1, Rank.TWO, true, true);
     }
+    
+    //used when checking if deck matches a play
+    protected static boolean SingleChecker(Deck deck){
+        Single single = new Single();
+        
+        return single.isValidPlay(deck);
+    }
 
 }

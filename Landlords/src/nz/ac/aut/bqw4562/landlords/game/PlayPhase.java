@@ -5,7 +5,11 @@
 package nz.ac.aut.bqw4562.landlords.game;
 
 import nz.ac.aut.bqw4562.landlords.cards.Deck;
+import nz.ac.aut.bqw4562.landlords.cards.PlayingCard;
+import nz.ac.aut.bqw4562.landlords.cards.Rank;
 import nz.ac.aut.bqw4562.landlords.player.Player;
+import static nz.ac.aut.bqw4562.landlords.game.combinations.CardPlayFinder.CardPlayFinder;
+import static nz.ac.aut.bqw4562.landlords.game.combinations.CardPlayFinder.CardPlayMatches;
 
 /**
  *
@@ -15,6 +19,7 @@ public class PlayPhase extends Phase{
     //The current player being asked for cards
     Player currentPlayer = turnManager.currentPlayer();
     int passCounter = 0;
+    String comboPlayed;
 
     public PlayPhase(Game game) {
         super(game);
@@ -23,14 +28,7 @@ public class PlayPhase extends Phase{
     
     protected boolean executePhase(){
         
-        /*
-        Game play loop. Ask player for card. Check if valid. Go to next player
-        */
-        while(true){
-            
-        }
-        
-        return false;
+        throw new UnsupportedOperationException("Not yet Implemented.");
     }
     
     //Method to ask what player wants to do
@@ -47,6 +45,13 @@ public class PlayPhase extends Phase{
                 passCounter++;
                 break;
             case 1:
+                //if two or more players pass, the previous play is cleared and the comboPlayed is reset
+                if(passCounter >= 2){
+                    dealerDeck.clearDeck();
+                    comboPlayed = null;
+                }
+                //everytime a player plays, the passcounter is reset
+                passCounter = 0;
                 //method for checking if play is valid, parameter is a method that
                 //returns a deck of player selected cards
                 checkValidPlay(playerCardSubmit());
@@ -98,25 +103,52 @@ public class PlayPhase extends Phase{
     public void checkValidPlay(Deck selectedCards){
         System.out.println("Checking if play is valid");
         
-        boolean previousPlay = dealerDeck.isDeckEmpty();
+        //stores if there was a previous play, ie dealerDeck is not empty
+        boolean previousPlay = !dealerDeck.isDeckEmpty();
 
-        //if the dealerDeck is empty, the play is automatically valid
-        //add the cards from selectedCards to the dealerDeck
-        if (previousPlay){
+        //if there was no previous play
+        if (!previousPlay){
             
             //while selectedCard isn't empty, keep dealing cards from selectedCards
+            //which will store the playedDeck
             while(!selectedCards.isDeckEmpty()){
                 selectedCards.dealCard(dealerDeck);
             }
-            
+            //check what play was submitted and set the comboPlayed
+            comboPlayed = CardPlayFinder(dealerDeck);
             //change to the next player
             turnManager.nextTurn();
+            
         }
-        else {
-            //Method comparing selectedCards and dealerDeck;
+        //if there is a combo in play
+        else if(comboPlayed != null){
+            
+            //if the selectedDeck matches the comboPlayed
+            if(CardPlayMatches(comboPlayed, selectedCards))
+            {
+                //**refactor later
+                //check if the rank of the selectedPlayerDeck is higher than the dealerDeck
+                //just checks the first card of each
+                Rank selectedRank = ((PlayingCard)selectedCards.getCard(1)).getRank();
+                Rank dealerRank = ((PlayingCard)dealerDeck.getCard(1)).getRank();
+                
+                if (selectedRank.compareTo(dealerRank) > 0){
+                    //if the selectedRank is higher than the dealerRank
+                    //empty the dealerDeck and fill with the selectedCards
+                    dealerDeck.clearDeck();
+                    
+                    while(!selectedCards.isDeckEmpty()){
+                        selectedCards.dealCard(dealerDeck);
+                    }
+                    
+                    //go to the next player
+                    turnManager.nextTurn();
+                }
+                
+                //else method that when the card isn't valid
+            }
         } 
         
     }
     
-    //
 }

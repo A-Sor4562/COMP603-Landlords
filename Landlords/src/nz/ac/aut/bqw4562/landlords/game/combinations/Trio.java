@@ -19,5 +19,12 @@ public class Trio extends CardPlay{
     private Trio(){
         super(3, Rank.TWO, false, true);
     }
+    
+    //used when checking if deck matches a play
+    protected static boolean TrioChecker(Deck deck){
+        Trio trio = new Trio();
+        
+        return trio.isValidPlay(deck);
+    }
 
 }
