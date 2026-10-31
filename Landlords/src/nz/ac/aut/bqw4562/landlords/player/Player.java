@@ -4,6 +4,7 @@
  */
 package nz.ac.aut.bqw4562.landlords.player;
 
+import nz.ac.aut.bqw4562.landlords.cards.Card;
 import nz.ac.aut.bqw4562.landlords.cards.Deck;
 
 /**
@@ -54,5 +55,21 @@ public abstract class Player {
     //Get player role
     public Role getRole(){
         return this.role;
+    }
+    
+    //Printing Players deck with index for playing
+    public void printPlayerDeck(){
+        //sort Deck before printing
+        deck.sortDeck();
+        
+        //for loop for printing, adds index for choice
+        for(int i = 0; i < deck.deckSize(); i++){
+            System.out.println("["+ i +"]"+ deck.getDeck().get(i));
+        }
+    }
+    
+    //Play card, using Deck's remove fuction. **Refactor
+    public Card playCard(int i){
+        return this.deck.removeCard(i);
     }
 }

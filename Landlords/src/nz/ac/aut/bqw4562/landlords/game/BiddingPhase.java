@@ -21,29 +21,21 @@ import nz.ac.aut.bqw4562.landlords.util.*;
         
  */
 public class BiddingPhase extends Phase{
-    //References to the three players. **refactor to be about player decks instead?
-    Player playerOne;
-    Player playerTwo;
-    Player playerThree;
-    Deck dealerDeck;
+
+
 
     //**Might want to refactor and pass turnmanager too
     //**Factory method for phasemanager to use?
     public BiddingPhase(Game game){
         super(game);
         
-        //passes the three players from game.
-        this.playerOne = game.playerOne;
-        this.playerTwo = game.playerTwo;
-        this.playerThree = game.playerThree;
-        
         //when phase is first started a dealerDeck initialized, filled and shuffled.
         //Creates deck, fills and shuffles it. **Refactor?
-        dealerDeck = new Deck();
         dealerDeck.fillDeck();
         dealerDeck.shuffleDeck();
     }
     
+    //**MISSING
     @Override
     protected boolean executePhase(){
         
@@ -114,11 +106,11 @@ public class BiddingPhase extends Phase{
             }
             
             //if bid still not 3, go to next player then run loop again.
-            turnManager.nextPlayer();
+            turnManager.nextTurn();
             
             //Breaks immediately if two consecutive passes have occurred and at least one
             //bid was placed
-            //Placed after nextPlayer to so the index is pointing to the last player
+            //Placed after nextTurn to so the index is pointing to the last player
             //who bid. **redo code, maybe store player bids instead of relying on turn loop
             if (passCounter == 2 && bid != 0){
                 break;
@@ -153,13 +145,13 @@ public class BiddingPhase extends Phase{
         //**refactor into turnManager??
         Player landlord = turnManager.currentPlayer();
         
-        turnManager.nextPlayer();//go to next player
+        turnManager.nextTurn();//go to next player
         Player peasantOne = turnManager.currentPlayer();
         
-        turnManager.nextPlayer();//go to next player
+        turnManager.nextTurn();//go to next player
         Player peasantTwo = turnManager.currentPlayer();
         
-        turnManager.nextPlayer();//index is now pointing to landlord
+        turnManager.nextTurn();//index is now pointing to landlord
         //swap the turns of the landlord with the person that is at index 0.
         //check if landlord is already at index 0
         int landlordIndex = turnManager.findPlayerIndex(landlord);

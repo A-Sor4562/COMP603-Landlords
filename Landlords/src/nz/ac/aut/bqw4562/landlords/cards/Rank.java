@@ -9,9 +9,9 @@ package nz.ac.aut.bqw4562.landlords.cards;
  * @author AngelaSoriano
  * Holds all the ranks of cards except Joker
  * No logic handling
- * Package-Private
+ * 
  */
-enum Rank {
+public enum Rank {
     THREE, 
     FOUR, 
     FIVE, 

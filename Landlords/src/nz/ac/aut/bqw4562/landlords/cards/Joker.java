@@ -38,7 +38,7 @@ public class Joker extends Card{
     
     //Single getter only as they are both jokers and the colour is the only one used in game logic
     public String getJoker(){
-        return this.colour + this.rank;
+        return this.colour;
     }
     
     //Easier printing for CLI, format is Colour Joker

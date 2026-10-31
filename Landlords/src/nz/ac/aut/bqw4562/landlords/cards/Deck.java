@@ -22,6 +22,10 @@ public class Deck {
     public Deck(){
         this.deckOfCards = new ArrayList<>();
     };
+    //Getter for a card at index
+    public Card getCard(int i){
+        return this.deckOfCards.get(i);
+    }
     
     //method to fill a deck
     public void fillDeck(){
@@ -41,6 +45,11 @@ public class Deck {
         this.addCard(Joker.redJoker());
         this.addCard(Joker.blackJoker());
         
+        //Check if deck is not filled with 54 cards
+        if (this.deckSize() != 54){
+            throw new IllegalStateException("Deck isn't valid.");
+        }
+        
     }
     
         
@@ -49,27 +58,47 @@ public class Deck {
         Collections.shuffle(deckOfCards);
     }
     
-//    //Sort Method
-//    public void sortDeck(){
-//        this.deckOfCards.sort(null);
-//    }
+    //Sort Method
+    public void sortDeck(){
+        Collections.sort(deckOfCards, new CardOrder());
+    }
     
     //Add Method
     public void addCard(Card c){
-        this.deckOfCards.add(c);
+       if(c == null){
+           System.out.println("Not added, card doesn't exist.");
+       } else {
+           this.deckOfCards.add(c);
+       }
     }
     
     //Remove method for a specific card, returns the removed card.
-    //**add error handling - always returns c without checking if c is actually removed
     public Card removeCard(Card c){
-        this.deckOfCards.remove(c);
-        return c;
+        if(deckOfCards.remove(c)){
+            return c;
+        }
+        //returns null, if deck doesn't contain card.
+        return null;
     }
     
     //Remove method, no parameters will always remove the first card on a deck
-    //**add error handling, array outof bounds
     public Card removeCard(){
-        return this.deckOfCards.remove(0);
+        try{
+        return deckOfCards.remove(0);
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("Deck is empty.");
+            return null;
+        }
+    }
+    
+    //Remove method using index
+    public Card removeCard(int i){
+        try{
+        return deckOfCards.remove(i);
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("Couldn't find card.");
+            return null;
+        }
     }
     
     //Deal method, remove card from a deck, then add to a new one.
@@ -86,12 +115,27 @@ public class Deck {
     
     //Check deck if empty, returns boolean
     public boolean isDeckEmpty(){
+        if (this.deckOfCards == null){
+            return true;
+        }
+        
         return this.deckOfCards.isEmpty();
     }
     
     //Get deckSize
     public int deckSize(){
         return this.deckOfCards.size();
+    }
+    
+    //Check if deck contains a card, returns boolean
+    public boolean containsCard(Card c){
+        return this.deckOfCards.contains(c);
+    }
+    
+    
+    //Get deck **TEMPORARY
+    public ArrayList<Card> getDeck(){
+        return this.deckOfCards;
     }
     
     //Printing methods for CLI
@@ -102,5 +146,6 @@ public class Deck {
             System.out.println(deckOfCards.get(i));
         }
     }
+    
     
 }    
