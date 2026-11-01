@@ -26,6 +26,7 @@ replay_pid*
 /Landlords/build/
 /Landlords/dist/
 
-# Ignore temporary files from Excel and Word
-~$*.xlsx
-~$*.docx
+# Ignore files from Excel and Word
+*.xlsx
+*.docx
+
