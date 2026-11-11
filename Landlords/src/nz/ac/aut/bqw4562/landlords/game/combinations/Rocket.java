@@ -13,9 +13,19 @@ import nz.ac.aut.bqw4562.landlords.cards.*;
  * Beats everything else
  */
 public class Rocket extends CardPlay{
+    private static Rocket rocketPlay = null;
+    
     //private constructor for method only initialization
     private Rocket(){
         super(2, null, true, false);
     } 
     
+    //Access method
+    public static Rocket rocketPlay(){
+        if(rocketPlay == null){
+            rocketPlay = new Rocket();
+        }
+        
+        return rocketPlay;
+    }
 }

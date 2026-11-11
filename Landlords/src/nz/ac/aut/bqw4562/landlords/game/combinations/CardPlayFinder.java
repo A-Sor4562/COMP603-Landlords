@@ -5,6 +5,9 @@
 package nz.ac.aut.bqw4562.landlords.game.combinations;
 
 import nz.ac.aut.bqw4562.landlords.cards.Deck;
+import static nz.ac.aut.bqw4562.landlords.game.combinations.Pair.pairPlay;
+import static nz.ac.aut.bqw4562.landlords.game.combinations.Single.singlePlay;
+import static nz.ac.aut.bqw4562.landlords.game.combinations.Trio.trioPlay;
 
 /**
  *
@@ -17,13 +20,13 @@ public class CardPlayFinder {
     
     //finds the card play a deck has.
     public static String CardPlayFinder(Deck deck){
-        if(SingleChecker(deck)){
+        if(singlePlay().isValidPlay(deck)){
             return "Single";
         }
-        else if(PairChecker(deck)){
+        else if(pairPlay().isValidPlay(deck)){
             return "Pair";
         }
-        else if(TrioChecker(deck)){
+        else if(trioPlay().isValidPlay(deck)){
             return "Trio";
         }
         else {return "No match found";}
@@ -34,11 +37,11 @@ public class CardPlayFinder {
         
         switch(comboType){
             case "Single":
-                return SingleChecker(deck);
+                return singlePlay().isValidPlay(deck);
             case "Pair":
-                return PairChecker(deck);
+                return pairPlay().isValidPlay(deck);
             case "Trio":
-                return TrioChecker(deck);
+                return trioPlay().isValidPlay(deck);
             default:
                 return false;
         }
