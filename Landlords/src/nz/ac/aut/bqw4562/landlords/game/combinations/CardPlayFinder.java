@@ -12,14 +12,14 @@ import static nz.ac.aut.bqw4562.landlords.game.combinations.Trio.trioPlay;
 /**
  *
  * @author AngelaSoriano
- * Class responsibility is to match a deck into a card play
+ * Class responsibility is to find and match card plays
  * Only Single, Pair and Trios are checked at the moment.
  * Bombs and Rockets can trump all plays so will be handled separately
  */
-public class CardPlayFinder {
+public abstract class CardPlayFinder {
     
     //finds the card play a deck has.
-    public static String CardPlayFinder(Deck deck){
+    public static String playFinder(Deck deck){
         if(singlePlay().isValidPlay(deck)){
             return "Single";
         }
@@ -33,7 +33,7 @@ public class CardPlayFinder {
     }
     
     //Checks a submitted deck
-    public static boolean CardPlayMatches(String comboType, Deck deck){
+    public static boolean playMatcher(String comboType, Deck deck){
         
         switch(comboType){
             case "Single":

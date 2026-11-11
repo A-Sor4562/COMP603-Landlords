@@ -8,8 +8,8 @@ import nz.ac.aut.bqw4562.landlords.cards.Deck;
 import nz.ac.aut.bqw4562.landlords.cards.PlayingCard;
 import nz.ac.aut.bqw4562.landlords.cards.Rank;
 import nz.ac.aut.bqw4562.landlords.player.Player;
-import static nz.ac.aut.bqw4562.landlords.game.combinations.CardPlayFinder.CardPlayFinder;
-import static nz.ac.aut.bqw4562.landlords.game.combinations.CardPlayFinder.CardPlayMatches;
+import static nz.ac.aut.bqw4562.landlords.game.combinations.CardPlayFinder.playFinder;
+import static nz.ac.aut.bqw4562.landlords.game.combinations.CardPlayFinder.playMatcher;
 
 /**
  *
