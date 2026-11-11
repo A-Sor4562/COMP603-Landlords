@@ -73,23 +73,22 @@ public abstract class CardPlay {
     
     //Method to check if a deck contains a playingCard
     protected boolean containsPlayingCard(Deck deck){
-        boolean playingCardFound = false;
         
         for(int i = 0; i < deck.deckSize(); i++){
             if(deck.getCard(i) instanceof PlayingCard)
             {
-                playingCardFound = true;
+                return true;
             }
         }
         
-        return playingCardFound;
+        return false;
     }        
     
     //Method to return what the highest rank is in a deck
     //sorts the deck by rank first then grabs the last playingCards rank
     protected Rank highestRank(Deck deck){
         deck.sortDeck();
-        Rank highestRank = Rank.THREE;
+        Rank highestRank = null;
         
         //Loop iterates through card deck then stores the highest rank found
         for(int i = deck.deckSize(); i <0 ; i--){
@@ -110,7 +109,7 @@ public abstract class CardPlay {
         return highestRank;
     }
     
-    //Method for checking all the cards in a deck
+    //Method for checking if the card in a deck is the same rank
     protected boolean isValidCombination(Deck deck) {
         if(deck.isDeckEmpty()){
             return false;
