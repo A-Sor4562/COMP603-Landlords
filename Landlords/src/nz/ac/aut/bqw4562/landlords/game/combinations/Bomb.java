@@ -16,15 +16,19 @@ import nz.ac.aut.bqw4562.landlords.cards.*;
  * No jokers allowed
  */
 public class Bomb extends CardPlay{
+    private static Bomb bombPlay = null;
+    
     //private constructor for method only initialization
     private Bomb(){
         super(4, Rank.THREE, false, true);
     }    
     
-    //used when checking if deck matches a play
-    protected static boolean BombChecker(Deck deck){
-        Bomb bomb = new Bomb();
+    //Access Method
+    public static synchronized Bomb bombPlay(){
+        if(bombPlay == null){
+            bombPlay = new Bomb();
+        }
         
-        return bomb.isValidPlay(deck);
-    }    
+        return bombPlay;
+    }
 }

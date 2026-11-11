@@ -18,10 +18,4 @@ public class Rocket extends CardPlay{
         super(2, null, true, false);
     } 
     
-    //used when checking if deck matches a play
-    protected static boolean RocketChecker(Deck deck){
-        Rocket rocket = new Rocket();
-        
-        return rocket.isValidPlay(deck);
-    }    
 }

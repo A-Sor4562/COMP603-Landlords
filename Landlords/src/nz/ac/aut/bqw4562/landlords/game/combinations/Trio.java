@@ -14,17 +14,19 @@ import nz.ac.aut.bqw4562.landlords.cards.*;
  * No jokers allowed
  */
 public class Trio extends CardPlay{
+    private static Trio trioPlay = null;
     
     //private constructor for method only initialization
     private Trio(){
         super(3, Rank.TWO, false, true);
     }
     
-    //used when checking if deck matches a play
-    protected static boolean TrioChecker(Deck deck){
-        Trio trio = new Trio();
-        
-        return trio.isValidPlay(deck);
+    //Access method
+    public static synchronized Trio trioPlay()
+    {
+        if(trioPlay == null){
+            trioPlay = new Trio();
+        }
+        return trioPlay;
     }
-
 }

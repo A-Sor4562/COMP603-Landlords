@@ -5,9 +5,6 @@
 package nz.ac.aut.bqw4562.landlords.game.combinations;
 
 import nz.ac.aut.bqw4562.landlords.cards.Deck;
-import static nz.ac.aut.bqw4562.landlords.game.combinations.Pair.PairChecker;
-import static nz.ac.aut.bqw4562.landlords.game.combinations.Single.SingleChecker;
-import static nz.ac.aut.bqw4562.landlords.game.combinations.Trio.TrioChecker;
 
 /**
  *

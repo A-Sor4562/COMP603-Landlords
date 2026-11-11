@@ -13,16 +13,19 @@ import nz.ac.aut.bqw4562.landlords.cards.*;
  * Can go up from three to Jokers.
  */
 public class Single extends CardPlay{
+    private static Single singlePlay = null;
+    
     //private constructor for method only initialization
     private Single(){
         super(1, Rank.TWO, true, true);
     }
-    
-    //used when checking if deck matches a play
-    protected static boolean SingleChecker(Deck deck){
-        Single single = new Single();
-        
-        return single.isValidPlay(deck);
-    }
 
+    //Access Method
+    public static synchronized Single singlePlay()
+    {
+        if(singlePlay == null){
+            singlePlay = new Single();
+        }
+        return singlePlay;
+    }
 }
