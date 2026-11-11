@@ -7,6 +7,7 @@ package nz.ac.aut.bqw4562.landlords.game;
 /**
  *
  * @author AngelaSoriano
+ * Class Manages what phase is in play.
  */
 public class PhaseManager {
     
