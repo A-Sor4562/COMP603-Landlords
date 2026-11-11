@@ -21,7 +21,7 @@ public class PlayerSelection {
     
     //Function to load player
     protected void playerLoader(){
-        
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
     //Method to createPlayer.

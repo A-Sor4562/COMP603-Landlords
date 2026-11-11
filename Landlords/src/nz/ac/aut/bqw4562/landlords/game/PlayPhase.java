@@ -10,6 +10,9 @@ import nz.ac.aut.bqw4562.landlords.cards.Rank;
 import nz.ac.aut.bqw4562.landlords.player.Player;
 import static nz.ac.aut.bqw4562.landlords.game.combinations.CardPlayFinder.playFinder;
 import static nz.ac.aut.bqw4562.landlords.game.combinations.CardPlayFinder.playMatcher;
+import static nz.ac.aut.bqw4562.landlords.game.combinations.TrumpHandler.bombChecker;
+import static nz.ac.aut.bqw4562.landlords.game.combinations.TrumpHandler.isATrump;
+import static nz.ac.aut.bqw4562.landlords.game.combinations.TrumpHandler.rocketChecker;
 
 /**
  *
@@ -115,7 +118,7 @@ public class PlayPhase extends Phase{
                 selectedCards.dealCard(dealerDeck);
             }
             //check what play was submitted and set the comboPlayed
-            comboPlayed = CardPlayFinder(dealerDeck);
+            comboPlayed = playFinder(dealerDeck);
             //change to the next player
             turnManager.nextTurn();
             
@@ -124,13 +127,13 @@ public class PlayPhase extends Phase{
         else if(comboPlayed != null){
             
             //if the selectedDeck matches the comboPlayed
-            if(CardPlayMatches(comboPlayed, selectedCards))
+            if(playMatcher(comboPlayed, selectedCards))
             {
                 //**refactor later
                 //check if the rank of the selectedPlayerDeck is higher than the dealerDeck
                 //just checks the first card of each
-                Rank selectedRank = ((PlayingCard)selectedCards.getCard(1)).getRank();
-                Rank dealerRank = ((PlayingCard)dealerDeck.getCard(1)).getRank();
+                Rank selectedRank = ((PlayingCard)selectedCards.getCard(0)).getRank();
+                Rank dealerRank = ((PlayingCard)dealerDeck.getCard(0)).getRank();
                 
                 if (selectedRank.compareTo(dealerRank) > 0){
                     //if the selectedRank is higher than the dealerRank
@@ -145,7 +148,34 @@ public class PlayPhase extends Phase{
                     turnManager.nextTurn();
                 }
                 
-                //else method that when the card isn't valid
+                //else methods that when the card isn't valid
+                //need to check if the card submitted is a trump ie Bomb or Rocket
+                else if (isATrump(selectedCards)){
+                    //if play is a trump, check if it's rocket and set the comboPlayed.
+                    //empty dealerDeck and store play
+                    if (rocketChecker(selectedCards)){
+                        comboPlayed = "Rocket";
+                        dealerDeck.clearDeck();
+                        
+                        while(!selectedCards.isDeckEmpty()){
+                            selectedCards.dealCard(dealerDeck);
+                        }
+                    }
+                    
+                    //if play is bomb,store play then go to the next player
+                    if (bombChecker(selectedCards)){
+                        dealerDeck.clearDeck();
+                        
+                        while(!selectedCards.isDeckEmpty()){
+                            selectedCards.dealCard(dealerDeck);
+                        }
+                    }
+                    
+                }
+                //default case is card is not valid, return card to player.
+                else {
+                    //return card to player.
+                }
             }
         } 
         
