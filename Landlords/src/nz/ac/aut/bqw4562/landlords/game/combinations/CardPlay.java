@@ -40,17 +40,23 @@ public abstract class CardPlay {
     //Checks if the deck meets the requirements of a play
     protected boolean meetsRequirements(Deck deck){
         
+        //checks if no deck is passed
         if(deck == null){
-            throw new IllegalArgumentException("No deck passed");
-        }else if (deck.deckSize() != this.playSize){
             return false;
         }
+        //checks if the deck meets the amount of cards required in a play
+        else if (deck.deckSize() != this.playSize){
+            return false;
+        }
+        //checks if there's a joker
         else if(containsJoker(deck) != this.jokersAllowed){
             return false;
         }
+        //checks if there's a playingcard
         else if(containsPlayingCard(deck) != this.playingCardAllowed){
             return false;
         }
+        //checks if the highestRank in the deck is higher than what the play allows
         else if(highestRank(deck).compareTo(this.maxRank) <= 0){
             return false;
         }
@@ -59,16 +65,15 @@ public abstract class CardPlay {
     
     //Method to check if a deck contains a joker
     protected boolean containsJoker(Deck deck){
-        boolean jokerFound = false;
         
         for(int i = 0; i < deck.deckSize(); i++){
             if(deck.getCard(i) instanceof Joker)
             {
-                jokerFound = true;
+                return true;
             }
         }
         
-        return jokerFound;
+        return false;
     }
     
     //Method to check if a deck contains a playingCard
@@ -111,6 +116,7 @@ public abstract class CardPlay {
     
     //Method for checking if the card in a deck is the same rank
     protected boolean isValidCombination(Deck deck) {
+        //checks if deck is empty
         if(deck.isDeckEmpty()){
             return false;
         }
