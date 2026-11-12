@@ -25,7 +25,7 @@ public class TurnManager {
     }
     
     //sets index to zero
-    protected void resetOrder(){
+    protected void resetIndex(){
         index = 0;
     }
     
@@ -36,12 +36,12 @@ public class TurnManager {
     
     //Increments index
     protected void nextTurn(){
-        if (index == 2) {resetOrder();}
+        if (index == 2) {resetIndex();}
         else {index++;}
         
     }
     
-    //Returns index of Player
+    //Returns index/turn order of Player
     protected int findPlayerIndex(Player player){
         //Loop for iterating through array
         for (int i = 0; i < playerArray.length; i++)
@@ -74,5 +74,24 @@ public class TurnManager {
         //Place pOne in the index of PTwo
         playerArray[pTwoI] = pOne;
         
+    }
+    
+    //Places this player first in turn order, returns true when successful
+    protected boolean placeFirst(Player player){
+        
+        switch(findPlayerIndex(player)){
+            case 0:
+                //code block for if player is already first
+                return true;
+            case -1:
+                //code block if player isn't found
+                return false;
+            default:
+                //code block for if player isn't first
+                //reset turn, then swap the current player who is first with the player who needs to be first
+                resetIndex();
+                swapTurns(currentPlayer(), player);
+                return true;
+        }
     }
 }

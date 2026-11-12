@@ -4,10 +4,6 @@
  */
 package nz.ac.aut.bqw4562.landlords.game;
 
-import nz.ac.aut.bqw4562.landlords.cards.Deck;
-import nz.ac.aut.bqw4562.landlords.player.Player;
-import nz.ac.aut.bqw4562.landlords.util.*;
-
 /**
  *
  * @author AngelaSoriano
@@ -21,60 +17,42 @@ import nz.ac.aut.bqw4562.landlords.util.*;
         
  */
 public class BiddingPhase extends Phase{
-    private int bid = 0;
-    private int passCounter = 0;
+    private int bid;
+    private int passCounter;
 
-
-    //**Might want to refactor and pass turnmanager too
-    //**Factory method for phasemanager to use?
-    public BiddingPhase(Game game){
+    //private constructor for method only instantiation
+    private BiddingPhase(Game game){
         super(game);
         
         //when phase is first started a dealerDeck initialized, filled and shuffled.
-        //Creates deck, fills and shuffles it. **Refactor?
-        dealerDeck.fillDeck();
-        dealerDeck.shuffleDeck();
+        //Creates deck, fills and shuffles it. uses resetDealerDeck function
+        resetDealerDeck();
     }
     
-    //**MISSING
-    @Override
-    protected boolean executePhase(){
-        
-        
-        return false;
-    }
-    
-    //**refactor into Deck later?
     //Game starts with dealing 17 cards, holding the last three for the landlord.
     //Loops through the players 17 times instead of giving each player 17 cards 
-    //in one go. **Change to implement turn manager?
+    //in one go.
     protected void dealInitialCards(){
 
-        //Loop 17 times to deal cards **Refactor later? looks ugly
-        //**Add checks for if each deck is recieving the right cards?
-        //Check at the end if dealer has three cards?
-        //**Needs error handling too
+        //Loop 17 times to deal cards
         for (int i = 0; i <17 ; i++){
             
-            dealerDeck.dealCard(playerOne.getPlayerDeck());
-            dealerDeck.dealCard(playerTwo.getPlayerDeck());
-            dealerDeck.dealCard(playerThree.getPlayerDeck());
+            game.getDealerDeck().dealCard(game.getPlayerOne().getPlayerDeck());
+            game.getDealerDeck().dealCard(game.getPlayerTwo().getPlayerDeck());
+            game.getDealerDeck().dealCard(game.getPlayerThree().getPlayerDeck());
             
         }
         
     }
     
-    //Actual Bidding Phase - each player takes turns to bid or pass.
-    //Highest bid is 3, if there is one bid and two consecutive passes, the one bid
-    //becomes the landlord.
-    //No bids means game have to deal the cards again.
-    //At this point, turn order is still default.
-    //**Refactor? method is might be very long.
-    
     //Increases bid counter, resets passcounter for every bid
     protected void bid(){
         bid++;
         resetPassCounter();
+    }
+    
+    protected void resetBid(){
+        bid = 0;
     }
     
     //Resets passcounter
@@ -84,57 +62,94 @@ public class BiddingPhase extends Phase{
     
     //Clears player decks
     protected void clearPlayerDecks(){
-        playerOne.getPlayerDeck().clearDeck();
-        playerTwo.getPlayerDeck().clearDeck();
-        playerThree.getPlayerDeck().clearDeck();
+        game.getPlayerOne().getPlayerDeck().clearDeck();
+        game.getPlayerTwo().getPlayerDeck().clearDeck();
+        game.getPlayerThree().getPlayerDeck().clearDeck();
     }
     
     //resets dealerDeck
     protected void resetDealerDeck(){
-        dealerDeck.clearDeck();
-        dealerDeck.fillDeck();
-        dealerDeck.shuffleDeck();
+        game.getDealerDeck().clearDeck();
+        game.getDealerDeck().fillDeck();
+        game.getDealerDeck().shuffleDeck();
+    }
+    
+    @Override
+    protected Phase startPhase(Game game) {
+        return new BiddingPhase(game);
+    }
+    
+    //**MISSING
+    @Override
+    protected boolean executePhase(){
+        
+        return false;
+    }
+    
+    //method that checks the passCounter, three passes mean all players passed, reset decks.
+    //two consecutive passes mean the last player who bid will become landlord
+    protected boolean checkPassCounter(){
+        if (passCounter == 3){
+            resetDealerDeck();
+            clearPlayerDecks();
+            return true;
+        }
+        //if passCounter is 2, the index of turnManager needs to go to the next player as they will be the ones who bid.
+        else if (passCounter == 2){
+            game.getTurnManager().nextTurn();
+            //method that changes the roles.
+            return true;
+        }
+        else {
+           return false;
+        }
+    }
+    
+    //Method that checks if the bid has reached 3, check if passcounter requirements are met, otherwise continue with turn.
+    protected boolean checkBid(){
+        if (bid == 3){
+            //method that changes the roles.
+            return true;
+        }
+        else if (checkPassCounter()){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    //Method that changes the role of players, turnManager index must be at the landlord
+    protected void setRolesAndTurnOrder(){
+        //changes the current player to be landlord
+        game.getCurrentPlayer().setAsLandlord();
+        
+        //places landlord first in turnManager
+        game.getTurnManager().placeFirst(game.getCurrentPlayer());
+        
+        //goes to the next player and sets as peasant, does this twice
+        for(int i = 0; i < 2; i++){
+            game.getTurnManager().nextTurn();
+            game.getCurrentPlayer().setAsPeasant();
+        }
+        
+    }
+    
+    //Method gives landlord the rest of the cards
+    protected void giveLandlord(){
+        //makes sure the turn manager is pointing to landlord
+        game.getTurnManager().resetIndex();
+        
+        while(!game.getDealerDeck().isDeckEmpty()){
+            game.getDealerDeck().dealCard(game.getCurrentPlayer().getPlayerDeck());
+        }
     }
     
     protected void conductBidding(){
-        
-        //after loop for bid is run I need to change roles and turn order.
-        //also need to reset turnorder.
-        //currently the index of turnManager is pointing to the player who bid highest.
-        //therefore they become landlord. ** might need to separate into method.
-        //**refactor into turnManager??
-        Player landlord = turnManager.currentPlayer();
-        
-        turnManager.nextTurn();//go to next player
-        Player peasantOne = turnManager.currentPlayer();
-        
-        turnManager.nextTurn();//go to next player
-        Player peasantTwo = turnManager.currentPlayer();
-        
-        turnManager.nextTurn();//index is now pointing to landlord
-        //swap the turns of the landlord with the person that is at index 0.
-        //check if landlord is already at index 0
-        int landlordIndex = turnManager.findPlayerIndex(landlord);
-        if (landlordIndex != 0)
-        {
-            //**Refactor/make a method that uses playerIndex instead of playerObjects?
-            //Swap the player at index 0 with the landlord.
-            //First reset the order.
-            turnManager.resetOrder();
-            turnManager.swapTurns(turnManager.currentPlayer(), landlord);
-            //end of this code block, index of turnManager is still 0/at first
-        }
-        
-        //Change the player roles
-        landlord.setAsLandlord();
-        peasantOne.setAsPeasant();
-        peasantTwo.setAsPeasant();
-        
         //Give the rest of the dealerDeck to the Landlord
-        while(!dealerDeck.isDeckEmpty()){
-            dealerDeck.dealCard(landlord.getPlayerDeck());
-        }
+
         //End of Bidding Phase.
         
     }
+
 }

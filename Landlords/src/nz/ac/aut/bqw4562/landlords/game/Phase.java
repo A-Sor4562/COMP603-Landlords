@@ -17,12 +17,17 @@ public abstract class Phase {
     //Game reference
     protected Game game;
     
-    public Phase(Game game){
+    protected Phase(Game game){
         this.game = game;
     }
     
+    //Phase start/setup
+    protected abstract Phase startPhase(Game game);
+    
     //Each subclass has this as their main player turn loop.**Re-do later
-    //Phase will return true on completion, return false if not
+
     protected abstract boolean executePhase();
+    
+
     
 }
