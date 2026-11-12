@@ -21,7 +21,8 @@ import nz.ac.aut.bqw4562.landlords.util.*;
         
  */
 public class BiddingPhase extends Phase{
-
+    private int bid = 0;
+    private int passCounter = 0;
 
 
     //**Might want to refactor and pass turnmanager too
@@ -69,11 +70,20 @@ public class BiddingPhase extends Phase{
     //No bids means game have to deal the cards again.
     //At this point, turn order is still default.
     //**Refactor? method is might be very long.
-    //Recursion?
+    
+    //Increases bid counter
+    protected void bid(){
+        bid++;
+    }
+    
+    //Resets passcounter
+    protected void resetPassCounter(){
+        passCounter = 0;
+    }
+    
+    
     protected void conductBidding(){
-        //variable holding the bid.
-        int bid = 0;
-        int passCounter = 0;
+
         boolean run = true;
         
         //while loop to keep bidding running
@@ -85,28 +95,12 @@ public class BiddingPhase extends Phase{
                 Bidding = increment bid and go to next player.
                 **Make an iterator for turnManager?? maybe for phaseManager to do?
             */
-
-            //prompt and ask for player input
-            userIO.displayPrompt("Enter 1 to bid or 0 to pass", turnManager.currentPlayer());
-            int input = userIO.askUserInput();
-            if (input == 1){
-                //every bid resets the passCounter to 0 as we are only checking
-                //for consecutive passes.
-                bid++;
-                passCounter = 0;
-            }
-            else if (input == 0){
-                passCounter++;
-            }
             
             //Breaks immediately if bid has reached 3, at this point index is
             //pointing to the player who bid three
             if (bid == 3){
                 break;
             }
-            
-            //if bid still not 3, go to next player then run loop again.
-            turnManager.nextTurn();
             
             //Breaks immediately if two consecutive passes have occurred and at least one
             //bid was placed
