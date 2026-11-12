@@ -20,9 +20,10 @@ public abstract class Player {
     protected Role role; 
     
     //constructor for method only instantiation, 
-    //each player has only one deck
+    //each player has only one deck, don't have roles at the beggining
     protected Player(){
         this.deck = new Deck();
+        this.role = null;
     } 
     
     public void setPlayerName(String changeName){
@@ -57,18 +58,7 @@ public abstract class Player {
         return this.role;
     }
     
-    //Printing Players deck with index for playing
-    public void printPlayerDeck(){
-        //sort Deck before printing
-        deck.sortDeck();
-        
-        //for loop for printing, adds index for choice
-        for(int i = 0; i < deck.deckSize(); i++){
-            System.out.println("["+ i +"]"+ deck.getDeck().get(i));
-        }
-    }
-    
-    //Play card, using Deck's remove fuction. **Refactor
+    //Play card, using Deck's remove fuction.
     public Card playCard(int i){
         return this.deck.removeCard(i);
     }
