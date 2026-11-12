@@ -16,10 +16,14 @@ import static nz.ac.aut.bqw4562.landlords.game.combinations.Trio.trioPlay;
  * @author AngelaSoriano
  * Class responsibility is to find and match card plays
  */
-public abstract class CardPlayFinder {
+public class CardPlayFinder {
+    
+    public CardPlayFinder(){
+        
+    };
     
     //finds the card play a deck has.
-    public static String playFinder(Deck deck){
+    public String playFinder(Deck deck){
         if(singlePlay().isValidPlay(deck)){
             return "Single";
         }
@@ -39,7 +43,7 @@ public abstract class CardPlayFinder {
     }
     
     //Checks a submitted deck
-    public static boolean playMatcher(String comboType, Deck deck){
+    public boolean playMatcher(String comboType, Deck deck){
         
         switch(comboType){
             case "Single":

@@ -13,18 +13,18 @@ import static nz.ac.aut.bqw4562.landlords.game.combinations.Rocket.rocketPlay;
  * @author AngelaSoriano
  * Class handles trumps, ie. bombs and rockets
  */
-public abstract class TrumpHandler {
+public class TrumpHandler {
     
     //Method to check if the deck is a rocket, returns boolean
-    public static boolean rocketChecker(Deck deck){
+    public boolean rocketChecker(Deck deck){
         return rocketPlay().isValidPlay(deck);
     }
     
-    public static boolean bombChecker(Deck deck){
+    public boolean bombChecker(Deck deck){
         return bombPlay().isValidPlay(deck);
     }
     
-    public static boolean isATrump(Deck deck){
+    public boolean isATrump(Deck deck){
         if (rocketChecker(deck) || bombChecker(deck)){
             return true;
         }

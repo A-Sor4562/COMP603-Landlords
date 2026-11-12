@@ -34,8 +34,7 @@ public class Game {
     //Game owns a phase which holds the current phase
     private Phase currentPhase = null;
     
-    //private for method only instantiation
-    private Game(Player pOne, Player pTwo, Player pThree){
+    public Game(Player pOne, Player pTwo, Player pThree){
         this.playerOne = pOne;
         this.playerTwo = pTwo;
         this.playerThree = pThree;
