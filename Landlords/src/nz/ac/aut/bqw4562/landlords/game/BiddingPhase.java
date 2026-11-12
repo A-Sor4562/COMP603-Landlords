@@ -71,9 +71,10 @@ public class BiddingPhase extends Phase{
     //At this point, turn order is still default.
     //**Refactor? method is might be very long.
     
-    //Increases bid counter
+    //Increases bid counter, resets passcounter for every bid
     protected void bid(){
         bid++;
+        resetPassCounter();
     }
     
     //Resets passcounter
@@ -81,56 +82,21 @@ public class BiddingPhase extends Phase{
         passCounter = 0;
     }
     
+    //Clears player decks
+    protected void clearPlayerDecks(){
+        playerOne.getPlayerDeck().clearDeck();
+        playerTwo.getPlayerDeck().clearDeck();
+        playerThree.getPlayerDeck().clearDeck();
+    }
+    
+    //resets dealerDeck
+    protected void resetDealerDeck(){
+        dealerDeck.clearDeck();
+        dealerDeck.fillDeck();
+        dealerDeck.shuffleDeck();
+    }
     
     protected void conductBidding(){
-
-        boolean run = true;
-        
-        //while loop to keep bidding running
-        while(run){
-            /*
-                Assume the player decks have been displayed **UI function maybe
-                We go through each player and ask if they want to bid or pass.
-                Passing = go to the next player
-                Bidding = increment bid and go to next player.
-                **Make an iterator for turnManager?? maybe for phaseManager to do?
-            */
-            
-            //Breaks immediately if bid has reached 3, at this point index is
-            //pointing to the player who bid three
-            if (bid == 3){
-                break;
-            }
-            
-            //Breaks immediately if two consecutive passes have occurred and at least one
-            //bid was placed
-            //Placed after nextTurn to so the index is pointing to the last player
-            //who bid. **redo code, maybe store player bids instead of relying on turn loop
-            if (passCounter == 2 && bid != 0){
-                break;
-            }
-            
-            //If all players pass and no one bids, reset all decks and dealInitialCards again.
-            if (passCounter == 3 && bid == 0){
-                //Reset counters
-                bid = 0;
-                passCounter = 0;
-                
-                //Clear all player decks.
-                playerOne.getPlayerDeck().clearDeck();
-                playerTwo.getPlayerDeck().clearDeck();
-                playerThree.getPlayerDeck().clearDeck();
-                
-                //Clear, fill and shuffle dealerDeck
-                dealerDeck.clearDeck();
-                dealerDeck.fillDeck();
-                dealerDeck.shuffleDeck();
-                
-                //Deal initial cards again.
-                dealInitialCards();
-            }
-
-        }
         
         //after loop for bid is run I need to change roles and turn order.
         //also need to reset turnorder.
