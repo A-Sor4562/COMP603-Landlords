@@ -7,178 +7,172 @@ package nz.ac.aut.bqw4562.landlords.game;
 import nz.ac.aut.bqw4562.landlords.cards.Deck;
 import nz.ac.aut.bqw4562.landlords.cards.PlayingCard;
 import nz.ac.aut.bqw4562.landlords.cards.Rank;
-import nz.ac.aut.bqw4562.landlords.player.Player;
-import static nz.ac.aut.bqw4562.landlords.game.combinations.CardPlayFinder.playFinder;
-import static nz.ac.aut.bqw4562.landlords.game.combinations.CardPlayFinder.playMatcher;
-import static nz.ac.aut.bqw4562.landlords.game.combinations.TrumpHandler.bombChecker;
-import static nz.ac.aut.bqw4562.landlords.game.combinations.TrumpHandler.isATrump;
-import static nz.ac.aut.bqw4562.landlords.game.combinations.TrumpHandler.rocketChecker;
+import nz.ac.aut.bqw4562.landlords.game.combinations.CardPlayFinder;
+import nz.ac.aut.bqw4562.landlords.game.combinations.TrumpHandler;
 
 /**
  *
  * @author AngelaSoriano
  */
 public class PlayPhase extends Phase{
-    //The current player being asked for cards
-    Player currentPlayer = turnManager.currentPlayer();
-    int passCounter = 0;
-    String comboPlayed;
+    private String comboPlayed;
+    private CardPlayFinder comboChecker;
+    private TrumpHandler trumpChecker;
+    private boolean previousPlay = false;
 
-    public PlayPhase(Game game) {
+    private PlayPhase(Game game) {
         super(game);
         
+        comboChecker = new CardPlayFinder();
+        trumpChecker = new TrumpHandler();
+        
+        resetPassCounter();
+        
     }
     
+//    //method where player submits their cards
+//    public Deck playerCardSubmit(){
+//        
+//        //Deck to hold which cards are being played.
+//        Deck cardsPlayed = new Deck();
+//        
+//        game.getCurrentPlayer().playCard();
+//        return cardsPlayed;
+//    }
+    
+    //Previous plays are stored in dealerDeck, if it's empty there is no play,
+    protected void checkForPreviousPlay(){
+        previousPlay = !(game.getDealerDeck().isDeckEmpty());
+    }
+    
+    //clears dealerDeck then deals all the selected cards into dealerDeck
+    protected void playAccepted(Deck selectedCards){
+        clearDealerDeck();
+        while(!selectedCards.isDeckEmpty()){
+                selectedCards.dealCard(game.getDealerDeck());
+            }
+        
+    }
+    
+    //Method for no previous play, play is accepted and combo is found
+    protected boolean noPreviousPlay(Deck selectedCards){
+        findCombo(selectedCards);
+        playAccepted(selectedCards);
+        return true;
+        
+    }
+    
+    //method for having a previous play, checks if the selected cards matches the combo that is being played
+    //also checks if the rank is higher or it's a trump, returns true if play was accepted.
+    protected boolean yesPreviousPlay(Deck selectedCards){
+        //if the combo matches and the rank is higher accept play
+        if(isComboMatching(selectedCards) && compareRank(selectedCards)){
+            playAccepted(selectedCards);
+            return true;
+        }
+        
+        //if selectedCards is a trump and rocket hasn't been in play yet
+        if(isATrump(selectedCards)){
+            playAccepted(selectedCards);
+            return true;
+        }
+        
+        return false;
+    }
+    
+    //method returns card to player if it's invalid **needs to be implemented.
+    protected void playDenied(){
+        
+    }
+    
+    //checks if combo is matching
+    protected boolean isComboMatching(Deck selectedCards){
+        return comboChecker.playMatcher(comboPlayed, selectedCards);
+    }
+    
+    //checks if trump play, return true if it is, false if not, sets combo type as well
+    protected boolean isATrump(Deck selectedCards){
+        //checks if deck is rocket, sets the combo type to Rocket and accepts the play
+        if (trumpChecker.rocketChecker(selectedCards)){
+            comboPlayed = "Rocket";
+            playAccepted(selectedCards);
+            return true;
+        }
+                    
+        //if play is bomb, accept play, return true
+        if (trumpChecker.bombChecker(selectedCards)){
+            comboPlayed = "Bomb";
+            playAccepted(selectedCards);
+            return true;
+        }
+        
+        return false;
+    }
+    
+    //method for finding combo
+    protected void findCombo(Deck deck){
+        comboPlayed = comboChecker.playFinder(deck);
+    }
+    
+    //returns true if selected cards are higher than dealerDeck cards
+    protected boolean compareRank(Deck selectedCards){
+        try{
+            Rank selectedRank = ((PlayingCard)selectedCards.getCard(0)).getRank();
+            Rank dealerRank = ((PlayingCard)game.getDealerDeck().getCard(0)).getRank();
+        
+                if (selectedRank.compareTo(dealerRank) > 0){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+        } catch (ClassCastException e){
+            return false;
+        }
+        catch (IndexOutOfBoundsException e){
+            return false;
+        }
+        catch (NullPointerException e){
+            return false;
+        }
+    }
+    
+    @Override
+    protected boolean checkPassCounter(){
+        //if two or more players pass, the previous play is cleared and the comboPlayed is reset
+        if(passCounter >= 2){
+            
+            game.getDealerDeck().clearDeck();
+            comboPlayed = null;
+            
+        }
+        return true;
+    }
+    
+    @Override
+    protected Phase startPhase(Game game) {
+        return new PlayPhase(game);
+    }
+    
+    @Override
     protected boolean executePhase(){
         
-        throw new UnsupportedOperationException("Not yet Implemented.");
+        return isPhaseFinished();
     }
     
-    //Method to ask what player wants to do
-    public void askPlayerAction(){
-        /*
-        Prompts are pass, play card
-        Go into the method for asking for cards.
-        */
-        userIO.displayPrompt("Pass or play?", currentPlayer);
-        
-        switch(userIO.askUserInput()) {
-            case 0:
-                System.out.println("Player is passing");
-                passCounter++;
-                break;
-            case 1:
-                //if two or more players pass, the previous play is cleared and the comboPlayed is reset
-                if(passCounter >= 2){
-                    dealerDeck.clearDeck();
-                    comboPlayed = null;
-                }
-                //everytime a player plays, the passcounter is reset
-                passCounter = 0;
-                //method for checking if play is valid, parameter is a method that
-                //returns a deck of player selected cards
-                checkValidPlay(playerCardSubmit());
-                //go to next player
-                break;
-            default:
-                System.out.println("Invalid input, try again");
-                askPlayerAction();
-                break;
-        
-        }
-        
+    @Override
+    protected void acceptTurn(){
+        //everytime a player plays, the passcounter is reset
+        resetPassCounter();
+        //player will submit cards which will be checked
+        checkValidPlay(playerCardSubmit());
     }
     
-    //Loop for player submitting cards, returns a deck of selected cards.
-    public Deck playerCardSubmit(){
-        boolean running = true;
-        
-        //Deck to hold which cards are being played.
-        Deck cardsPlayed = new Deck();
-        
-        System.out.println("Choose the cards you would like to submit");
-        currentPlayer.printPlayerDeck();
-        
-        while(running){
-            int i = userIO.askUserInput();
-            
-            switch(i){
-                case -1:
-                    running = false;
-                    break;
-                default:
-                    //add the card to cardsPlayed
-                    cardsPlayed.addCard(currentPlayer.playCard(i));
-                    break;
-            }
-            
-        }
-        
-        System.out.println("You chose the following cards:\n");
-        cardsPlayed.printDeck();
-        
-        return cardsPlayed;
-        
+    //Checks if the currentPlayers deck is empty
+    @Override
+    protected boolean isPhaseFinished(){
+        return game.getCurrentPlayer().getPlayerDeck().isDeckEmpty();
     }
     
-    //Checking if submitted deck is a valid play. the previous play is stored in
-    //dealerDeck.
-    public void checkValidPlay(Deck selectedCards){
-        System.out.println("Checking if play is valid");
-        
-        //stores if there was a previous play, ie dealerDeck is not empty
-        boolean previousPlay = !dealerDeck.isDeckEmpty();
-
-        //if there was no previous play
-        if (!previousPlay){
-            
-            //while selectedCard isn't empty, keep dealing cards from selectedCards
-            //which will store the playedDeck
-            while(!selectedCards.isDeckEmpty()){
-                selectedCards.dealCard(dealerDeck);
-            }
-            //check what play was submitted and set the comboPlayed
-            comboPlayed = playFinder(dealerDeck);
-            //change to the next player
-            turnManager.nextTurn();
-            
-        }
-        //if there is a combo in play
-        else if(comboPlayed != null){
-            
-            //if the selectedDeck matches the comboPlayed
-            if(playMatcher(comboPlayed, selectedCards))
-            {
-                //**refactor later
-                //check if the rank of the selectedPlayerDeck is higher than the dealerDeck
-                //just checks the first card of each
-                Rank selectedRank = ((PlayingCard)selectedCards.getCard(0)).getRank();
-                Rank dealerRank = ((PlayingCard)dealerDeck.getCard(0)).getRank();
-                
-                if (selectedRank.compareTo(dealerRank) > 0){
-                    //if the selectedRank is higher than the dealerRank
-                    //empty the dealerDeck and fill with the selectedCards
-                    dealerDeck.clearDeck();
-                    
-                    while(!selectedCards.isDeckEmpty()){
-                        selectedCards.dealCard(dealerDeck);
-                    }
-                    
-                    //go to the next player
-                    turnManager.nextTurn();
-                }
-                
-                //else methods that when the card isn't valid
-                //need to check if the card submitted is a trump ie Bomb or Rocket
-                else if (isATrump(selectedCards)){
-                    //if play is a trump, check if it's rocket and set the comboPlayed.
-                    //empty dealerDeck and store play
-                    if (rocketChecker(selectedCards)){
-                        comboPlayed = "Rocket";
-                        dealerDeck.clearDeck();
-                        
-                        while(!selectedCards.isDeckEmpty()){
-                            selectedCards.dealCard(dealerDeck);
-                        }
-                    }
-                    
-                    //if play is bomb,store play then go to the next player
-                    if (bombChecker(selectedCards)){
-                        dealerDeck.clearDeck();
-                        
-                        while(!selectedCards.isDeckEmpty()){
-                            selectedCards.dealCard(dealerDeck);
-                        }
-                    }
-                    
-                }
-                //default case is card is not valid, return card to player.
-                else {
-                    //return card to player.
-                }
-            }
-        } 
-        
-    }
     
 }

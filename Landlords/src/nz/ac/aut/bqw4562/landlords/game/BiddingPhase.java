@@ -18,15 +18,15 @@ package nz.ac.aut.bqw4562.landlords.game;
  */
 public class BiddingPhase extends Phase{
     private int bid;
-    private int passCounter;
+    private boolean isBidWon = false;
 
     //private constructor for method only instantiation
     private BiddingPhase(Game game){
         super(game);
         
-        //when phase is first started a dealerDeck initialized, filled and shuffled.
-        //Creates deck, fills and shuffles it. uses resetDealerDeck function
-        resetDealerDeck();
+        //when this phase is first started a dealerDeck initialized, filled and shuffled.
+        //Creates deck, fills and shuffles it. uses refillDealerDeck function
+        refillDealerDeck();
     }
     
     //Game starts with dealing 17 cards, holding the last three for the landlord.
@@ -55,60 +55,15 @@ public class BiddingPhase extends Phase{
         bid = 0;
     }
     
-    //Resets passcounter
-    protected void resetPassCounter(){
-        passCounter = 0;
-    }
-    
-    //Clears player decks
-    protected void clearPlayerDecks(){
-        game.getPlayerOne().getPlayerDeck().clearDeck();
-        game.getPlayerTwo().getPlayerDeck().clearDeck();
-        game.getPlayerThree().getPlayerDeck().clearDeck();
-    }
-    
-    //resets dealerDeck
-    protected void resetDealerDeck(){
-        game.getDealerDeck().clearDeck();
-        game.getDealerDeck().fillDeck();
-        game.getDealerDeck().shuffleDeck();
-    }
-    
-    @Override
-    protected Phase startPhase(Game game) {
-        return new BiddingPhase(game);
-    }
-    
-    //**MISSING
-    @Override
-    protected boolean executePhase(){
-        
-        return false;
-    }
-    
-    //method that checks the passCounter, three passes mean all players passed, reset decks.
-    //two consecutive passes mean the last player who bid will become landlord
-    protected boolean checkPassCounter(){
-        if (passCounter == 3){
-            resetDealerDeck();
-            clearPlayerDecks();
-            return true;
-        }
-        //if passCounter is 2, the index of turnManager needs to go to the next player as they will be the ones who bid.
-        else if (passCounter == 2){
-            game.getTurnManager().nextTurn();
-            //method that changes the roles.
-            return true;
-        }
-        else {
-           return false;
-        }
+    protected void bidWasWon(){
+        isBidWon = true;
     }
     
     //Method that checks if the bid has reached 3, check if passcounter requirements are met, otherwise continue with turn.
     protected boolean checkBid(){
         if (bid == 3){
-            //method that changes the roles.
+            setRolesAndTurnOrder();
+            bidWasWon();
             return true;
         }
         else if (checkPassCounter()){
@@ -145,11 +100,49 @@ public class BiddingPhase extends Phase{
         }
     }
     
-    protected void conductBidding(){
-        //Give the rest of the dealerDeck to the Landlord
-
-        //End of Bidding Phase.
+    //method that checks the passCounter, three passes mean all players passed, reset decks.
+    //two consecutive passes mean the last player who bid will become landlord
+    @Override
+    protected boolean checkPassCounter(){
+        if (passCounter == 3){
+            refillDealerDeck();
+            clearAllPlayerDecks();
+            resetBid();
+            return true;
+        }
+        //if passCounter is 2, the index of turnManager needs to go to the next player as they will be the ones who bid.
+        else if (passCounter == 2){
+            game.getTurnManager().nextTurn();
+            //method that changes the roles and turn.
+            setRolesAndTurnOrder();
+            bidWasWon();
+            return true;
+        }
+        else {
+           return false;
+        }
+    }
+    
+    @Override
+    protected Phase startPhase(Game game) {
+        return new BiddingPhase(game);
+    }
+    
+    //**MISSING
+    @Override
+    protected boolean executePhase(){
         
+        return isPhaseFinished();
+    }
+
+    @Override
+    protected void acceptTurn() {
+        bid();
+    }
+    
+    @Override
+    protected boolean isPhaseFinished(){
+        return isBidWon;
     }
 
 }

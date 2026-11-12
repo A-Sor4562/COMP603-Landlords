@@ -42,7 +42,6 @@ public class PlayerSelection {
         selectedPlayers.remove(player);
     }
     
-    //Refactor later
     //Passes player to the game instance.
     protected void finishSelection(){
         Game gameInstance = new Game(selectedPlayers.get(0),selectedPlayers.get(1),selectedPlayers.get(3));
