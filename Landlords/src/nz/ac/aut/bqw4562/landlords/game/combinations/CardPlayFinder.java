@@ -5,7 +5,9 @@
 package nz.ac.aut.bqw4562.landlords.game.combinations;
 
 import nz.ac.aut.bqw4562.landlords.cards.Deck;
+import static nz.ac.aut.bqw4562.landlords.game.combinations.Bomb.bombPlay;
 import static nz.ac.aut.bqw4562.landlords.game.combinations.Pair.pairPlay;
+import static nz.ac.aut.bqw4562.landlords.game.combinations.Rocket.rocketPlay;
 import static nz.ac.aut.bqw4562.landlords.game.combinations.Single.singlePlay;
 import static nz.ac.aut.bqw4562.landlords.game.combinations.Trio.trioPlay;
 
@@ -13,8 +15,6 @@ import static nz.ac.aut.bqw4562.landlords.game.combinations.Trio.trioPlay;
  *
  * @author AngelaSoriano
  * Class responsibility is to find and match card plays
- * Only Single, Pair and Trios are checked at the moment.
- * Bombs and Rockets can trump all plays so will be handled separately
  */
 public abstract class CardPlayFinder {
     
@@ -29,6 +29,12 @@ public abstract class CardPlayFinder {
         else if(trioPlay().isValidPlay(deck)){
             return "Trio";
         }
+        else if(bombPlay().isValidPlay(deck)){
+            return "Bomb";
+        }
+        else if (rocketPlay().isValidPlay(deck)){
+            return "Rocket";
+        }
         else {return "No match found";}
     }
     
@@ -42,8 +48,10 @@ public abstract class CardPlayFinder {
                 return pairPlay().isValidPlay(deck);
             case "Trio":
                 return trioPlay().isValidPlay(deck);
+            case "Rocket":
+                return rocketPlay().isValidPlay(deck);
             default:
                 return false;
         }
-    }    
+    }
 }

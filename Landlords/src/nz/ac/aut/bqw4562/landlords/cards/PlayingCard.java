@@ -48,6 +48,7 @@ public class PlayingCard extends Card implements Comparable<PlayingCard>{
         if (this.suit.equals(c.suit)){
             return this.rank.compareTo(c.rank);
         }
+        
         return this.suit.compareTo(c.suit);
     }
     
