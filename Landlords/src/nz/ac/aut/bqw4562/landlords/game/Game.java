@@ -6,7 +6,7 @@ package nz.ac.aut.bqw4562.landlords.game;
 
 import nz.ac.aut.bqw4562.landlords.cards.Deck;
 import nz.ac.aut.bqw4562.landlords.player.Player;
-import nz.ac.aut.bqw4562.landlords.util.*;
+
 
 /**
  *
@@ -15,44 +15,46 @@ import nz.ac.aut.bqw4562.landlords.util.*;
  * 
  */
 public class Game {
-
+    private static Game gameInstance;
+    
     //The three players in each game instance.
     private Player playerOne;
     private Player playerTwo;
     private Player playerThree;
     
-    //Each game has a TurnManager and PhaseManager
+    //Each game has a TurnManager
     private TurnManager turnManager;
-    private PhaseManager phaseManager;
-    
-    //Game will also have this for user input **Temp
-    protected UserInputOutput userIO;
-    
+            
     //Game owns a deck for dealing and holding plays
     private Deck dealerDeck;
     
-    //Game owns a phase which holds the current phase
-    private Phase currentPhase = null;
-    
-    public Game(Player pOne, Player pTwo, Player pThree){
+    private Game(Player pOne, Player pTwo, Player pThree){
         this.playerOne = pOne;
         this.playerTwo = pTwo;
         this.playerThree = pThree;
         
         turnManager = new TurnManager(pOne, pTwo, pThree);
-        phaseManager = new PhaseManager();
-        userIO = new UserInputOutput();
         
         this.dealerDeck = new Deck();
     }
     
+    public static synchronized Game getGameInstance(){
+        return gameInstance;
+    }
     
-    //What the game needs to do when starting.
-    //Passes the three player instances to turnManager.
-    public void start(){
+    public static synchronized Game getGameInstance(Player pOne, Player pTwo, Player pThree){
+        if (gameInstance == null){
+            gameInstance = new Game(pOne, pTwo, pThree);
+        }
+        
+        return gameInstance;
+    }
+    
+    //method for starting game phases, launch BiddingPhase
+    public void startGame(){
         
     }
-
+    //Getters
     public Player getPlayerOne() {
         return playerOne;
     }
@@ -67,10 +69,6 @@ public class Game {
     
     public Player getCurrentPlayer(){
         return turnManager.currentPlayer();
-    }
-
-    public PhaseManager getPhaseManager() {
-        return phaseManager;
     }
     
     public TurnManager getTurnManager(){

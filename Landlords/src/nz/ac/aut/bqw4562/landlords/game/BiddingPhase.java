@@ -128,15 +128,17 @@ public class BiddingPhase extends Phase{
         return new BiddingPhase(game);
     }
     
-    //**MISSING
     @Override
     protected boolean executePhase(){
+        //first deal the cards
+        dealInitialCards();
+        
         
         return isPhaseFinished();
     }
 
     @Override
-    protected void acceptTurn() {
+    public void acceptTurn() {
         bid();
     }
     
