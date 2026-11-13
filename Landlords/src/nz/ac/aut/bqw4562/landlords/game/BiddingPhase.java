@@ -133,11 +133,12 @@ public class BiddingPhase extends Phase{
         //first deal the cards
         dealInitialCards();
         
+        
         return isPhaseFinished();
     }
 
     @Override
-    protected void acceptTurn() {
+    public void acceptTurn() {
         bid();
     }
     

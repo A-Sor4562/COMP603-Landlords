@@ -50,11 +50,6 @@ public class StartGamePanel extends JPanel implements ActionListener{
         playerTwo.setPreferredSize(TEXT_BOX_SIZE);
         playerThree.setPreferredSize(TEXT_BOX_SIZE);
         
-//        //align text according to TEXT_ALIGNMENT
-//        playerOne.setHorizontalAlignment(TEXT_ALIGNMENT);
-//        playerTwo.setHorizontalAlignment(TEXT_ALIGNMENT);
-//        playerThree.setHorizontalAlignment(TEXT_ALIGNMENT);
-        
         startGame.addActionListener(this);
         
         //Adding instruction at the top middle, Copilot helped

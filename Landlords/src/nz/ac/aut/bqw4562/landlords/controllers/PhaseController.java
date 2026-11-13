@@ -4,8 +4,10 @@
  */
 package nz.ac.aut.bqw4562.landlords.controllers;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
+import nz.ac.aut.bqw4562.landlords.app.PhasePanel;
 import nz.ac.aut.bqw4562.landlords.game.Phase;
 
 /**
@@ -15,20 +17,32 @@ import nz.ac.aut.bqw4562.landlords.game.Phase;
 public abstract class PhaseController {
     //Each subclass has a panel and phase they interact with
     protected Phase phase;
-    protected JPanel panel;
+    protected PhasePanel panel;
     
-    protected PhaseController(Phase phase, JPanel panel){
+    protected PhaseController(Phase phase, PhasePanel panel){
         this.phase = phase;
         this.panel = panel;
         
-        //listeners
-        panel.addPassListener(new PassListener());
-        panel.add(new PlayListener());
+        panel.getPassButton().addActionListener(new PassListener());
+        panel.getPlayButton().addActionListener(new PlayListener());
+        
     }
     
     //Two listeners for passing and playing
     //each controller implements their own logic for this
-    abstract class PassListener implements ActionListener{};
+    class PassListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            phase.pass();
+        }
+    }
     
-    abstract class PlayListener implements ActionListener{};
+    class PlayListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            phase.acceptTurn();
+        }
+    }
 }

@@ -26,7 +26,7 @@ public abstract class Phase {
         clearDealerDeck();
     }
     
-    protected void pass(){
+    public void pass(){
         passCounter++;
     }
     
@@ -59,7 +59,7 @@ public abstract class Phase {
     }
     
     //each Phase has the choice for the player of passing or accepting their turn
-    protected abstract void acceptTurn();
+    public abstract void acceptTurn();
     
     //each Phase needs to handle the passCounter at certain points of the game
     protected abstract boolean checkPassCounter();

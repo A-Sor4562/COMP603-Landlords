@@ -34,7 +34,6 @@ public class Game {
         this.playerThree = pThree;
         
         turnManager = new TurnManager(pOne, pTwo, pThree);
-        phaseManager = new PhaseManager();
         
         this.dealerDeck = new Deck();
     }
@@ -70,10 +69,6 @@ public class Game {
     
     public Player getCurrentPlayer(){
         return turnManager.currentPlayer();
-    }
-
-    public PhaseManager getPhaseManager() {
-        return phaseManager;
     }
     
     public TurnManager getTurnManager(){

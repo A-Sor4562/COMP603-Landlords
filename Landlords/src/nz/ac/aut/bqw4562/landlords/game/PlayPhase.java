@@ -30,15 +30,15 @@ public class PlayPhase extends Phase{
         
     }
     
-//    //method where player submits their cards
-//    public Deck playerCardSubmit(){
-//        
-//        //Deck to hold which cards are being played.
-//        Deck cardsPlayed = new Deck();
-//        
-//        game.getCurrentPlayer().playCard();
-//        return cardsPlayed;
-//    }
+    //method where player submits their cards
+    public Deck playerCardSubmit(){
+        
+        //Deck to hold which cards are being played.
+        Deck cardsPlayed = new Deck();
+        
+        //game.getCurrentPlayer().playCard();
+        return cardsPlayed;
+    }
     
     //Previous plays are stored in dealerDeck, if it's empty there is no play,
     protected void checkForPreviousPlay(){
@@ -160,8 +160,11 @@ public class PlayPhase extends Phase{
         return isPhaseFinished();
     }
     
+    //method to check if play is valid **Not implemented
+    protected void checkValidPlay(Deck deck){};
+    
     @Override
-    protected void acceptTurn(){
+    public void acceptTurn(){
         //everytime a player plays, the passcounter is reset
         resetPassCounter();
         //player will submit cards which will be checked
