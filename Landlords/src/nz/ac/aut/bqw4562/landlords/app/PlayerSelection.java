@@ -11,7 +11,7 @@ import nz.ac.aut.bqw4562.landlords.player.Player;
 
 
 /**
- *
+ * Not implemented
  * @author AngelaSoriano
  * Class to select three players by loading or creating. Players are passed onto the game class/instance.
  */
@@ -42,8 +42,4 @@ public class PlayerSelection {
         selectedPlayers.remove(player);
     }
     
-    //Passes player to the game instance.
-    protected void finishSelection(){
-        Game gameInstance = new Game(selectedPlayers.get(0),selectedPlayers.get(1),selectedPlayers.get(3));
-    }
 }

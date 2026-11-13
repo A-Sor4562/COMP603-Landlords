@@ -6,7 +6,6 @@ package nz.ac.aut.bqw4562.landlords.game;
 
 import nz.ac.aut.bqw4562.landlords.cards.Deck;
 import nz.ac.aut.bqw4562.landlords.player.Player;
-import nz.ac.aut.bqw4562.landlords.util.*;
 
 /**
  *
@@ -68,7 +67,7 @@ public abstract class Phase {
     //Phase start/setup
     protected abstract Phase startPhase(Game game);
     
-    //Each subclass has this as their main player turn loop.**Re-do later
+    //Each subclass has this as their main player turn loop.
     protected abstract boolean executePhase();
     
     //Each phase has a condition that ends it

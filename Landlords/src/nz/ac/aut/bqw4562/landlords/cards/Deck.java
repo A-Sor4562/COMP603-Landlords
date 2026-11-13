@@ -133,7 +133,7 @@ public class Deck {
     }
     
     
-    //Get deck **TEMPORARY
+    //Get deck
     public ArrayList<Card> getDeck(){
         return this.deckOfCards;
     }
@@ -146,6 +146,5 @@ public class Deck {
             System.out.println(deckOfCards.get(i));
         }
     }
-    
     
 }    
